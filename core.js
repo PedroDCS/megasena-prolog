@@ -4,23 +4,9 @@ class Prolog {
       this.session = pl.create();
   }
 }
+prolog = new Prolog();
 
 // Carregar arquivo fonte
-
-  
-  function create(){//Criar Tag Escondida  
-      // Buscar elemento pai
-      var body = document.body;
-
-      //Cria a elemento escondido
-      var element = document.createElement('div');
-      element.setAttribute('id', 'source');
-      element.setAttribute('style', 'display: none;');
-
-      // Inserir (anexar) o elemento filho (titulo) ao elemento pai (body)
-      body.appendChild(element);
-  }
-  
   window.onload = function () {
       //Check the support for the File API support
       if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -34,8 +20,9 @@ class Prolog {
                   var fileContents = document.getElementById('source');
                   var fatos = logarquivo(fileReader.result);
                   fileContents.innerText = fatos;
-                  console.log(fatos);
-                  fileContents.style = "display: relative;";
+                  loadModulos(fatos)
+                  //console.log(fatos);
+                  //fileContents.style = "display: relative;";
               }
               fileReader.readAsText(fileTobeRead);
           }, false);
@@ -45,6 +32,7 @@ class Prolog {
       }
   }
 
+  // Fromatar arquivo fonte
   function logarquivo(data) {
 
     var str = String(data).replace(/\s/g, '');
@@ -83,9 +71,54 @@ class Prolog {
 
 }
 
-// Fromatar arquivo fonte
 // Carregar arquivo fonte no tuvasa
+function loadModulos(db){
+    prolog.session.consult(db, {
+        success: function() { alert('DB Formatado');console.log("DB carregado na tag 'source'") },
+        error: function(err) { alert(err) }
+    });
+}
+
+function search(q){
+	// Get program
+	var program = document.getElementById("source").innerHTML.replace(/<br>/g,'\n');
+	// Clear output
+    var result = document.getElementById("resp");
+	result.innerHTML = "";
+	// Consult program
+	prolog.session.consult(program);
+	// Query goal
+	prolog.session.query(q);
+	// Find answers
+	prolog.session.answer((answer)=>{
+        result.innerHTML = result.innerHTML + "<div>" + prolog.session.format_answer(answer) + "</div>";
+    });
+
+}
+
+
 // Carregar regras pre prontas no tuvasa
 
-// Criar engine para adicioanr regra
+
+
+
+
 // Criar engine para fazer pesquisa
+var qTag = document.getElementById('q-prolog')
+qTag.addEventListener('keypress', function (e) {
+    if(e.key=="Enter"){
+        //Faz a pesquisa
+        search(qTag.value)
+    }
+}, false);
+
+function resp(content){
+    var tag = document.getElementById('resp')
+    tag.innerText = contet
+}
+
+
+
+
+
+
