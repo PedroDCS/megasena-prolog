@@ -79,19 +79,24 @@ function loadModulos(db){
     });
 }
 
+
+
 function search(q){
 	// Get program
 	var program = document.getElementById("source").innerHTML.replace(/<br>/g,'\n');
+    var query = document.getElementById('q-prolog').value
 	// Clear output
     var result = document.getElementById("resp");
 	result.innerHTML = "";
-	// Consult program
-	prolog.session.consult(program);
-	// Query goal
-	prolog.session.query(q);
 	// Find answers
-	prolog.session.answer((answer)=>{
-        result.innerHTML = result.innerHTML + "<div>" + prolog.session.format_answer(answer) + "</div>";
+    prolog.session.consult(program, {
+        success: function() {
+            prolog.session.query(query, {
+                success: function() {
+                    prolog.session.answers(resp);
+                }
+            })
+        }
     });
 
 }
@@ -112,13 +117,10 @@ qTag.addEventListener('keypress', function (e) {
     }
 }, false);
 
-function resp(content){
+
+// Persistir resutlado na tela
+function resp(answer){
+    content = prolog.session.format_answer(answer)
     var tag = document.getElementById('resp')
-    tag.innerText = contet
+    tag.innerText = tag.innerText + '\n'+content
 }
-
-
-
-
-
-
