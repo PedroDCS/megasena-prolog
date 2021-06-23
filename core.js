@@ -112,17 +112,22 @@ rTag.addEventListener('keypress', function (e) {
     }
 }, false);
 
-
-
-
-
-
 function regras(){
     //O número X já foi sorteado alguma vez? Por exemplo: numero_sorteado(2).
     var regra1 = "numero_sorteado(Number) :- jogo(_,Number,_,_,_,_,_) ; jogo(_,_,Number,_,_,_,_) ; jogo(_,_,_,Number,_,_,_) ; jogo(_,_,_,_,Number,_,_) ; jogo(_,_,_,_,_,Number,_) ; jogo(_,_,_,_,_,_,Number). "
-    //
-    var regra2 = "" 
-    var regras = regra1 + regra2
+    //Qual número nunca foi sorteado? Por exemplo: sorteado(X).
+    var regra2 = "sorteado(Number) :- \\+numero_sorteado(Number)."
+    //O jogo (X1,X2,X3,X4,X5,X6) já foi contemplado alguma vez? Por exemplo: jogo_sorteado(2,3,5,7,9,19).
+    var regra3_1 = "jogo(Jogo,Number) :- jogo(Jogo,Number,_,_,_,_,_) ; jogo(Jogo,_,Number,_,_,_,_) ; jogo(Jogo,_,_,Number,_,_,_) ; jogo(Jogo,_,_,_,Number,_,_) ; jogo(Jogo,_,_,_,_,Number,_) ; jogo(Jogo,_,_,_,_,_,Number)."
+    var regra3_2 = "dif(N1,N2,N3,N4,N5,N6) :- N1 =\\= N2, N1 =\\= N3, N1 =\\= N4, N1 =\\= N5, N1 =\\= N6, N2 =\\= N3, N2 =\\= N4, N2 =\\= N5, N2 =\\= N6, N3 =\\= N4, N3 =\\= N5, N3 =\\= N6, N4 =\\= N5, N4 =\\= N6, N5 =\\= N6 , !. "
+    var regra3_3 = "jogo_sorteado(N1,N2,N3,N4,N5,N6) :- jogo(Jogo,N1),jogo(Jogo,N2),jogo(Jogo,N3),jogo(Jogo,N4),jogo(Jogo,N5),jogo(Jogo,N6),dif(N1,N2,N3,N4,N5,N6). "
+    var regra3 = regra3_1 + regra3_2 + regra3_3
+    //Algum jogo completo já foi contemplado mais de uma vez? Qual?
+    var regra4 = "repetido(N1,N2,N3,N4,N5,N6) :- jogo(J1,N1,N2,N3,N4,N5,N6), jogo(J2,N1,N2,N3,N4,N5,N6), J1 =\\= J2. "
+    //Um número X foi sorteado quantas vezes?
+
+    var nl = '\n\n\n'
+    var regras = regra1 +nl+ regra2 +nl+ regra3 +nl+ regra4
     var fileContents = document.getElementById('regras');
     fileContents.innerText = regras;
 
