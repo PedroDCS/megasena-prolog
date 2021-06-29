@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho Prolog</title>
+    <!--Dependências-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Tau Prolog -->
+    <script type="text/javascript" src="tau-prolog.js"></script>
+</head>
+
+<body class="bg-secondary text-white">
+    <div class="container-xl">
+        <div class="hear text-center">
+            <br>
+            <h1>Trabalho de Paradigmas de Linguagens</h1>
+            <h3>Pedro Daniel Camargos Soares</h3>
+            <h3>Lucas Mateus Fernandes</h3>
+        </div>
+        <hr>
+        <div class="p-5 my-1 text-white">
+            <p>Trabalho Prolog consulta mega senha no banco de dados:</p>
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Escolha o arquivo com os fatos para iniciar o programa</label>
+                <input type="file" class="form-control-file" id="sourceProlog">
+            </div>
+        </div>
+        <div id="corposite" style="display: none">
+            <!-- style="display: none"-->
+            <div class=" p-3 my-1 bg-dark text-white">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="q-prolog">Faça uma pesquisa personalizada</label>
+                        <input id="q-prolog" class="form-control" placeholder="Query de Pesquisa">
+                    </div>
+                    <div class="col-6">
+                        <label for="r-prolog">Crie uma regra personalizada</label>
+                        <input id="r-prolog" class="form-control" placeholder="Criar Regra">
+                    </div>
+
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <h5 class="col-12">Faça perguntas a base de conhecimento:</h5>
+                <div class="col-6">
+                    <label for="">O número X já foi sorteado alguma vez?</label>
+                    <div class="input-group mb-3">
+                        <input id="personalquery1" type="text" class="form-control" placeholder="Digite o numero ou uma Variavel">
+                        <div class="input-group-append">
+                            <button onclick="searchpersonal(1)" class="btn btn-success" type="button">Perguntar</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <label for="">Qual número nunca foi sorteado?</label>
+                    <div class="input-group mb-3">
+                        <input id="personalquery2" type="text" class="form-control" placeholder="Digite o numero ou uma Variavel">>
+                        <div class="input-group-append">
+                            <button onclick="searchpersonal(2)" class="btn btn-success" type="button">Perguntar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="">O jogo (X1,X2,X3,X4,X5,X6) já foi contemplado alguma vez?Ex: (2,3,5,7,9,19).</label>
+                    <div class="input-group mb-3">
+                        <input id="personalquery31" type="text" class="form-control" placeholder="X1">
+                        <input id="personalquery32" type="text" class="form-control" placeholder="X2">
+                        <input id="personalquery33" type="text" class="form-control" placeholder="X3">
+                        <input id="personalquery34" type="text" class="form-control" placeholder="X4">
+                        <input id="personalquery35" type="text" class="form-control" placeholder="X5">
+                        <input id="personalquery36" type="text" class="form-control" placeholder="X6">
+                        <div class="input-group-append">
+                            <button onclick="searchpersonal(3)" class="btn btn-success" type="button">Perguntar</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <label for="">Algum jogo completo já foi contemplado mais de uma vez? Qual?</label>
+                    <div class="input-group mb-3">
+                        <input id="personalquery4" type="text" class="form-control" placeholder="Digite o jogo Ex:(1,2,3,4,5,6) ou uma Variavel Ex (X)">>
+                        <div class="input-group-append">
+                            <button onclick="searchpersonal(4)" class="btn btn-success" type="button">Perguntar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="">Um número X foi sorteado quantas vezes?</label>
+                    <div class="input-group mb-3">
+                        <input id="personalquery5" type="text" class="form-control" placeholder="Digite um numero, Ex 1 ou 55">
+                        <div class="input-group-append">
+                            <button onclick="searchpersonal(5)" class="btn btn-success" type="button">Perguntar</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <label for="">Qual o número foi mais sorteado?</label>
+                    <div class="input-group mb-3">
+
+                        <button onclick="searchpersonal(6)" class="btn btn-success btn-block"
+                            type="button">Perguntar</button>
+
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <p>
+                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse"
+                    aria-expanded="false" aria-controls="collapse">
+                    Clique aqui para ver as regras padrões
+                </button>
+            </p>
+            <div class="collapse" id="collapse">
+                <div class="card card-body  bg-dark text-white">
+                    <h4>Regras</h4>
+                    <div id='regras'>
+                        Regras
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h4>Saida de resposta:</h4>
+                <div id='resp' class=".container-xl p-5 my-1 text-black">
+                    Resposta
+                </div>
+            </div>
+
+            <hr>
+            <p>
+                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse2"
+                    aria-expanded="false" aria-controls="collapse2">
+                    Clique aqui para ver os fatos
+                </button>
+            </p>
+            <div class="collapse" id="collapse2">
+                <div class="card card-body  bg-dark text-white">
+                    <h4>Fatos</h4>
+                    <div id='source'>
+                        Fatos
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <br><br>
+    </div>
+
+</body>
+<script type="text/javascript" src="index.js"></script>
+
+</html>
